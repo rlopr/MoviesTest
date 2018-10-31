@@ -1,0 +1,24 @@
+android {
+    defaultConfig {
+        buildConfigField "boolean", "IS_DEVELOPMENT", "false"
+        buildConfigField "String", "HOST",
+                "\"https://api.themoviedb.org/3/\""
+        buildConfigField "int", "ERROR_PROBABILITY", "0"
+        buildConfigField "String", "CLIENT_ID", "\"46d06f13bbfdc816fb9801e643648a4f\""
+        resValue "string", "app_name", "Movie"
+        buildConfigField "String", "DEVELOPING_FEATURE", "\"\""
+    }
+    buildTypes {
+        debug {
+            testCoverageEnabled true
+            buildConfigField "boolean", "IS_DEVELOPMENT", "true"
+        }
+        release {
+            buildConfigField "String", "HOST", "\"https://api.themoviedb.org/3/\""
+            buildConfigField "String", "CLIENT_ID", "\"1f54bd990f1cdfb230adb312546d765d\""
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            buildConfigField "String", "DEVELOPING_FEATURE", "\"-release\""
+        }
+    }
+}
