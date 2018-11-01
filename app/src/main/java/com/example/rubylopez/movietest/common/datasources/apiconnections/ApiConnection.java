@@ -7,6 +7,7 @@ import com.example.rubylopez.movietest.common.utilities.Constants;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import okhttp3.*;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -28,7 +29,7 @@ public class ApiConnection {
         return apiEndpointInterface;
     }
 
-    public static void initialize(final Context context) {
+    private static void initialize(final Context context) {
         Gson gson = new GsonBuilder()
                 .setDateFormat(Constants.ISO_DATE_FORMAT)
                 .create();
@@ -37,9 +38,8 @@ public class ApiConnection {
 
         builder.readTimeout(Constants.API_CONNECTION_TIMEOUT, TimeUnit.SECONDS);
         builder.connectTimeout(Constants.API_CONNECTION_TIMEOUT, TimeUnit.SECONDS);
-        final OkHttpClient okHttpClient = builder.build();
 
-        okHttpClient.interceptors().add(new Interceptor() {
+        builder.interceptors().add(new Interceptor() {
             @Override
             public Response intercept(Chain chain) throws IOException {
                 Request request = chain.request();
@@ -52,10 +52,15 @@ public class ApiConnection {
             }
         });
 
+        //TODO ADD loggind only in dev
+        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
+        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+        builder.addInterceptor(interceptor).build();
+
         retrofit = new Retrofit.Builder()
                 .baseUrl(BuildConfig.HOST)
                 .addConverterFactory(GsonConverterFactory.create(gson))
-                .client(okHttpClient)
+                .client(builder.build())
                 .build();
 
         apiEndpointInterface = retrofit.create(ApiEndpointInterface.class);

@@ -10,11 +10,11 @@ import retrofit2.Response;
 
 public class AllMoviesPresenter extends BasePresenter implements AllMoviesPresenterInterface {
 
-    private AllMoviesViewInterface mView;
+    private AllMoviesViewInterface view;
 
     public AllMoviesPresenter(BaseViewInterface view, ApiEndpointInterface api) {
         super(view, api);
-        this.mView = (AllMoviesViewInterface) view;
+        this.view = (AllMoviesViewInterface) view;
         this.api = api;
     }
 
@@ -23,7 +23,7 @@ public class AllMoviesPresenter extends BasePresenter implements AllMoviesPresen
         api.getAllMovies().enqueue(new Callback<MoviesResponse>() {
             @Override
             public void onResponse(Call<MoviesResponse> call, Response<MoviesResponse> response) {
-                response.body().getResults();
+                view.onGetMoviesSucess(response.body().getResults());
             }
 
             @Override
