@@ -5,7 +5,7 @@ MOBILE DEV CODE CHALLENGE using TheMovieDB's API.
 - Create a movies list
 <img src="screenshots/Screenshot_20181102-143659.png" alt="Movies List" width="200" />
 - Show movie's details
-<img src="screenshots/Screenshot_20181102-1436559.png" alt="Movies Detail" width="200" />
+<img src="screenshots/Screenshot_20181102-143659.png" alt="Movies Detail" width="200" />
 - Allow to search movies by name
 <img src="screenshots/Screenshot_20181102-143724.png" alt="Movies Search" width="200" />
 
