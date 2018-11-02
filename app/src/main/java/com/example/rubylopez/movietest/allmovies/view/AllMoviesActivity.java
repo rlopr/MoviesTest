@@ -3,8 +3,10 @@ package com.example.rubylopez.movietest.allmovies.view;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.view.Menu;
@@ -38,6 +40,11 @@ public class AllMoviesActivity extends AppCompatActivity implements AllMoviesVie
     AllMoviesPresenter presenter;
     MoviesAdapter adapter;
 
+    // For loading more.
+    private int visibleThreshold = 20;
+    private int lastVisibleItem, totalItemCount;
+    private boolean loading;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,10 +54,28 @@ public class AllMoviesActivity extends AppCompatActivity implements AllMoviesVie
         initialize();
         presenter = new AllMoviesPresenter(this, ApiConnection.getApi(this));
         presenter.getMovies();
+        loading = true;
     }
 
     private void initialize() {
         adapter = new MoviesAdapter(this, this);
+        final GridLayoutManager layoutManager = new GridLayoutManager(this, 3);
+        rvList.setLayoutManager(layoutManager);
+        rvList.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView,
+                                   int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+
+                totalItemCount = layoutManager.getItemCount();
+                lastVisibleItem = layoutManager.findLastVisibleItemPosition();
+                if (!loading && totalItemCount <= (lastVisibleItem + visibleThreshold)) {
+                    // End has been reached
+                    presenter.getMovies();
+                    loading = true;
+                }
+            }
+        });
         rvList.setAdapter(adapter);
     }
 
@@ -71,6 +96,7 @@ public class AllMoviesActivity extends AppCompatActivity implements AllMoviesVie
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
+                rvList.scrollToPosition(0);
                 presenter.searchMovie(query);
                 return false;
             }
@@ -85,6 +111,9 @@ public class AllMoviesActivity extends AppCompatActivity implements AllMoviesVie
             @Override
             public boolean onMenuItemActionCollapse(MenuItem item) {
                 // Do something when collapsed
+                rvList.scrollToPosition(0);
+                loading = true;
+                presenter.stopSearching();
                 presenter.getMovies();
                 return true;
             }
@@ -116,14 +145,16 @@ public class AllMoviesActivity extends AppCompatActivity implements AllMoviesVie
     }
 
     @Override
-    public void onGetMoviesSucess(List<MovieResult> result) {
-        adapter.addItems(result, true);
+    public void onGetMoviesSucess(List<MovieResult> result, boolean reset) {
+        adapter.addItems(result, reset);
         progressBar.setVisibility(View.GONE);
+        loading = false;
     }
 
     @Override
     public void onGetMoviesFailure(String error) {
         Toast.makeText(this, error, Toast.LENGTH_SHORT).show();
+        loading = false;
     }
 
     @Override

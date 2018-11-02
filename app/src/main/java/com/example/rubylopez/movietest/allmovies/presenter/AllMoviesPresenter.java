@@ -16,6 +16,9 @@ public class AllMoviesPresenter extends BasePresenter implements AllMoviesPresen
 
     private AllMoviesViewInterface view;
     private List<MovieResult> movies;
+    private int lastPage = 1;
+    private boolean isSearching = false;
+    private String query;
 
     public AllMoviesPresenter(BaseViewInterface view, ApiEndpointInterface api) {
         super(view, api);
@@ -26,28 +29,38 @@ public class AllMoviesPresenter extends BasePresenter implements AllMoviesPresen
     @Override
     public void getMovies() {
         view.showLoading();
-        api.getAllMovies().enqueue(new Callback<MoviesResponse>() {
-            @Override
-            public void onResponse(Call<MoviesResponse> call, Response<MoviesResponse> response) {
-                movies = response.body().getResults();
-                view.onGetMoviesSucess(movies);
-            }
 
-            @Override
-            public void onFailure(Call<MoviesResponse> call, Throwable t) {
-                view.onGetMoviesFailure(t.getMessage());
-            }
-        });
+        if (query != null) {
+            searchMovie(query);
+        } else {
+            api.getAllMovies(lastPage).enqueue(new Callback<MoviesResponse>() {
+                @Override
+                public void onResponse(Call<MoviesResponse> call, Response<MoviesResponse> response) {
+                    movies = response.body().getResults();
+                    view.onGetMoviesSucess(movies, lastPage == 1);
+                    lastPage++;
+                }
+
+                @Override
+                public void onFailure(Call<MoviesResponse> call, Throwable t) {
+                    view.onGetMoviesFailure(t.getMessage());
+                }
+            });
+        }
     }
 
     @Override
     public void searchMovie(String query) {
+        this.query = query;
+        lastPage = 1;
+
         view.showLoading();
-        api.getSearchedMovie(query).enqueue(new Callback<MoviesResponse>() {
+        api.getSearchedMovie(lastPage, query).enqueue(new Callback<MoviesResponse>() {
             @Override
             public void onResponse(Call<MoviesResponse> call, Response<MoviesResponse> response) {
                 movies = response.body().getResults();
-                view.onGetMoviesSucess(movies);
+                view.onGetMoviesSucess(movies, true);
+                lastPage++;
             }
 
             @Override
@@ -62,5 +75,8 @@ public class AllMoviesPresenter extends BasePresenter implements AllMoviesPresen
         return movies.get(position);
     }
 
-
+    public void stopSearching() {
+        query = null;
+        lastPage = 1;
+    }
 }

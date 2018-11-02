@@ -10,10 +10,10 @@
         android:id="@+id/rvList"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layoutManager="android.support.v7.widget.GridLayoutManager"
-        app:spanCount="3"
         tools:itemCount="5"
-        tools:listitem="@layout/item_movie" />
+        tools:layoutManager="android.support.v7.widget.GridLayoutManager"
+        tools:listitem="@layout/item_movie"
+        tools:spanCount="3" />
 
     <ProgressBar
         android:id="@+id/progressBar"

@@ -9,7 +9,7 @@ public interface AllMoviesViewInterface extends BaseViewInterface {
 
     void showLoading();
 
-    void onGetMoviesSucess(List<MovieResult> result);
+    void onGetMoviesSucess(List<MovieResult> result, boolean reset);
 
     void onGetMoviesFailure(String error);
 

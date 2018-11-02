@@ -15,10 +15,11 @@ import static com.example.rubylopez.movietest.common.utilities.Constants.APICons
 public interface ApiEndpointInterface {
 
     @GET(ALL_MOVIES)
-    Call<MoviesResponse> getAllMovies();
+    Call<MoviesResponse> getAllMovies(@Query("page") int page);
 
     @GET(SEARCH_MOVIE)
     Call<MoviesResponse> getSearchedMovie(
+            @Query("page") int page,
             @Query("query") String search);
 
     @GET(MOVIE_DETAIL)
