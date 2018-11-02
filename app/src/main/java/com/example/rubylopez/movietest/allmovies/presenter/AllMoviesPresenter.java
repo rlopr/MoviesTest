@@ -25,7 +25,25 @@ public class AllMoviesPresenter extends BasePresenter implements AllMoviesPresen
 
     @Override
     public void getMovies() {
+        view.showLoading();
         api.getAllMovies().enqueue(new Callback<MoviesResponse>() {
+            @Override
+            public void onResponse(Call<MoviesResponse> call, Response<MoviesResponse> response) {
+                movies = response.body().getResults();
+                view.onGetMoviesSucess(movies);
+            }
+
+            @Override
+            public void onFailure(Call<MoviesResponse> call, Throwable t) {
+                view.onGetMoviesFailure(t.getMessage());
+            }
+        });
+    }
+
+    @Override
+    public void searchMovie(String query) {
+        view.showLoading();
+        api.getSearchedMovie(query).enqueue(new Callback<MoviesResponse>() {
             @Override
             public void onResponse(Call<MoviesResponse> call, Response<MoviesResponse> response) {
                 movies = response.body().getResults();

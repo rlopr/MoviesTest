@@ -47,7 +47,10 @@ public class MoviesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         return itemList.size();
     }
 
-    public void addItems(List<MoviesResults> list) {
+    public void addItems(List<MoviesResults> list, boolean reset) {
+        if (reset) {
+            itemList = new ArrayList<>();
+        }
         itemList.addAll(list);
         notifyDataSetChanged();
     }

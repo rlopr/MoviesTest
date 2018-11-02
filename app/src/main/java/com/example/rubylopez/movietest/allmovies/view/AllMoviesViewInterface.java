@@ -7,6 +7,8 @@ import java.util.List;
 
 public interface AllMoviesViewInterface extends BaseViewInterface {
 
+    void showLoading();
+
     void onGetMoviesSucess(List<MoviesResults> result);
 
     void onGetMoviesFailure(String error);
