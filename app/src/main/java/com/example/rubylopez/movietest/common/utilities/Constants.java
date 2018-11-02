@@ -44,7 +44,7 @@ public final class Constants {
         public static final String ALL_MOVIES = "movie/upcoming?page=1"+ DEFAULT_PARAMS;
         public static final String SEARCH_MOVIE = "search/movie?"+ DEFAULT_PARAMS; //query={SEARCH}
         public static final String MOVIE_DETAIL = "movie/{MOVIE_ID}";
-        public static final String IMAGES = "https://image.tmdb.org/t/p/w200/{IMAGE_ID}";
+        public static final String IMAGES = "https://image.tmdb.org/t/p/w200";
 
     }
 

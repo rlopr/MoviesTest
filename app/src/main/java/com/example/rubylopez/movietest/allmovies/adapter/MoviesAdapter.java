@@ -1,9 +1,10 @@
-package com.example.rubylopez.movietest.allmovies;
+package com.example.rubylopez.movietest.allmovies.adapter;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.rubylopez.movietest.R;
@@ -16,9 +17,11 @@ public class MoviesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
     private Context context;
     private List<MoviesResults> itemList = new ArrayList<>();
+    private MovieClickListener movieClickListener;
 
-    public MoviesAdapter(Context context) {
+    public MoviesAdapter(Context context, MovieClickListener movieClickListener) {
         this.context = context;
+        this.movieClickListener = movieClickListener;
     }
 
     @NonNull
@@ -29,8 +32,14 @@ public class MoviesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
-        ((MoviewViewHolder)viewHolder).init(itemList.get(i));
+    public void onBindViewHolder(@NonNull final RecyclerView.ViewHolder viewHolder, int i) {
+        ((MoviewViewHolder) viewHolder).init(itemList.get(i));
+        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                movieClickListener.onMovieClicked(viewHolder.getAdapterPosition());
+            }
+        });
     }
 
     @Override
@@ -38,7 +47,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         return itemList.size();
     }
 
-    public void addItems(List<MoviesResults> list){
+    public void addItems(List<MoviesResults> list) {
         itemList.addAll(list);
         notifyDataSetChanged();
     }

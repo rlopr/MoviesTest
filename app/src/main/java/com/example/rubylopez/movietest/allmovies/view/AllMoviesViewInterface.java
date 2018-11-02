@@ -1,4 +1,4 @@
-package com.example.rubylopez.movietest.allmovies;
+package com.example.rubylopez.movietest.allmovies.view;
 
 import com.example.rubylopez.movietest.common.BaseViewInterface;
 import com.example.rubylopez.movietest.common.models.MoviesResults;

@@ -1,5 +1,6 @@
-package com.example.rubylopez.movietest.allmovies;
+package com.example.rubylopez.movietest.allmovies.view;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
@@ -12,12 +13,16 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
 import com.example.rubylopez.movietest.R;
+import com.example.rubylopez.movietest.allmovies.adapter.MovieClickListener;
+import com.example.rubylopez.movietest.allmovies.adapter.MoviesAdapter;
+import com.example.rubylopez.movietest.allmovies.presenter.AllMoviesPresenter;
 import com.example.rubylopez.movietest.common.datasources.apiconnections.ApiConnection;
 import com.example.rubylopez.movietest.common.models.MoviesResults;
+import com.example.rubylopez.movietest.moviedetail.view.MovieDetailActivity;
 
 import java.util.List;
 
-public class AllMoviesActivity extends AppCompatActivity implements AllMoviesViewInterface {
+public class AllMoviesActivity extends AppCompatActivity implements AllMoviesViewInterface, MovieClickListener {
 
     @BindView(R.id.rvList)
     RecyclerView rvList;
@@ -39,10 +44,11 @@ public class AllMoviesActivity extends AppCompatActivity implements AllMoviesVie
         presenter.getMovies();
     }
 
-    private void initialize(){
-        adapter = new MoviesAdapter(this);
+    private void initialize() {
+        adapter = new MoviesAdapter(this, this);
         rvList.setAdapter(adapter);
     }
+
 
     @Override
     public void onGetMoviesSucess(List<MoviesResults> result) {
@@ -59,5 +65,14 @@ public class AllMoviesActivity extends AppCompatActivity implements AllMoviesVie
     protected void onDestroy() {
         super.onDestroy();
         unbinder.unbind();
+        presenter = null;
+        adapter = null;
+    }
+
+    @Override
+    public void onMovieClicked(int position) {
+        Intent intent = new Intent(this, MovieDetailActivity.class);
+        intent.putExtra(MovieDetailActivity.EXTRA_MOVIE, presenter.getMovie(position));
+        startActivity(intent);
     }
 }
