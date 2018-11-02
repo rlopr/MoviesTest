@@ -1,0 +1,3 @@
+package com.example.rubylopez.movietest.common.models
+
+data class MovieResultDetailed(val adult: Boolean?, val backdrop_path: String?, val belongs_to_collection: Any?, val budget: Number?, val genres: List<Genre>?, val homepage: String?, val id: Number?, val imdb_id: String?, val original_language: String?, val original_title: String?, val overview: String?, val popularity: Number?, val poster_path: String?, val production_companies: List<Any>?, val release_date: String?, val revenue: Number?, val runtime: Number?, val status: String?, val tagline: String?, val title: String?, val video: Boolean?, val vote_average: Number?, val vote_count: Number?)
