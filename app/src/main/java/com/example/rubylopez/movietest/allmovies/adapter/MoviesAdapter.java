@@ -8,7 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.rubylopez.movietest.R;
-import com.example.rubylopez.movietest.common.models.MoviesResults;
+import com.example.rubylopez.movietest.common.models.MovieResult;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +16,7 @@ import java.util.List;
 public class MoviesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private Context context;
-    private List<MoviesResults> itemList = new ArrayList<>();
+    private List<MovieResult> itemList = new ArrayList<>();
     private MovieClickListener movieClickListener;
 
     public MoviesAdapter(Context context, MovieClickListener movieClickListener) {
@@ -47,7 +47,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         return itemList.size();
     }
 
-    public void addItems(List<MoviesResults> list, boolean reset) {
+    public void addItems(List<MovieResult> list, boolean reset) {
         if (reset) {
             itemList = new ArrayList<>();
         }

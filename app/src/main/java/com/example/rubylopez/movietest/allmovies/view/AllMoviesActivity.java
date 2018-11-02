@@ -22,7 +22,7 @@ import com.example.rubylopez.movietest.allmovies.adapter.MovieClickListener;
 import com.example.rubylopez.movietest.allmovies.adapter.MoviesAdapter;
 import com.example.rubylopez.movietest.allmovies.presenter.AllMoviesPresenter;
 import com.example.rubylopez.movietest.common.datasources.apiconnections.ApiConnection;
-import com.example.rubylopez.movietest.common.models.MoviesResults;
+import com.example.rubylopez.movietest.common.models.MovieResult;
 import com.example.rubylopez.movietest.moviedetail.view.MovieDetailActivity;
 
 import java.util.List;
@@ -116,7 +116,7 @@ public class AllMoviesActivity extends AppCompatActivity implements AllMoviesVie
     }
 
     @Override
-    public void onGetMoviesSucess(List<MoviesResults> result) {
+    public void onGetMoviesSucess(List<MovieResult> result) {
         adapter.addItems(result, true);
         progressBar.setVisibility(View.GONE);
     }

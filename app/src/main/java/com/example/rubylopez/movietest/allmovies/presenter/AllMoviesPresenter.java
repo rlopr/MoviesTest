@@ -5,7 +5,7 @@ import com.example.rubylopez.movietest.allmovies.view.AllMoviesViewInterface;
 import com.example.rubylopez.movietest.common.BaseViewInterface;
 import com.example.rubylopez.movietest.common.datasources.interfaces.ApiEndpointInterface;
 import com.example.rubylopez.movietest.common.models.MoviesResponse;
-import com.example.rubylopez.movietest.common.models.MoviesResults;
+import com.example.rubylopez.movietest.common.models.MovieResult;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -15,7 +15,7 @@ import java.util.List;
 public class AllMoviesPresenter extends BasePresenter implements AllMoviesPresenterInterface {
 
     private AllMoviesViewInterface view;
-    private List<MoviesResults> movies;
+    private List<MovieResult> movies;
 
     public AllMoviesPresenter(BaseViewInterface view, ApiEndpointInterface api) {
         super(view, api);
@@ -58,7 +58,7 @@ public class AllMoviesPresenter extends BasePresenter implements AllMoviesPresen
     }
 
     @Override
-    public MoviesResults getMovie(int position) {
+    public MovieResult getMovie(int position) {
         return movies.get(position);
     }
 
