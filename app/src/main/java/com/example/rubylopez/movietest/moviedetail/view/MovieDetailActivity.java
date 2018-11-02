@@ -1,9 +1,7 @@
 package com.example.rubylopez.movietest.moviedetail.view;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -13,15 +11,11 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import com.example.rubylopez.movietest.R;
-import com.example.rubylopez.movietest.allmovies.adapter.MovieClickListener;
-import com.example.rubylopez.movietest.allmovies.adapter.MoviesAdapter;
 import com.example.rubylopez.movietest.common.datasources.apiconnections.ApiConnection;
 import com.example.rubylopez.movietest.common.models.MoviesResults;
 import com.example.rubylopez.movietest.common.utilities.Constants;
 import com.example.rubylopez.movietest.moviedetail.presenter.MovieDetailPresenter;
 import com.squareup.picasso.Picasso;
-
-import java.util.List;
 
 public class MovieDetailActivity extends AppCompatActivity implements MovieDetailViewInterface {
 
@@ -56,7 +50,7 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieDetai
     public void onGetMovieSucess(MoviesResults result) {
         setTitle(result.getOriginal_title());
 
-        Picasso.get().load(Constants.APIConstants.IMAGES + result.getPoster_path()).into(ivImage);
+        Picasso.get().load(Constants.APIConstants.IMAGES_MEDIUM + result.getPoster_path()).into(ivImage);
         tvDescription.setText(result.getOverview());
 
         progressBar.setVisibility(View.GONE);

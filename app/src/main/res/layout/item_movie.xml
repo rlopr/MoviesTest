@@ -9,7 +9,7 @@
     <ImageView
         android:id="@+id/ivImage"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="@dimen/small_image_height"
         android:scaleType="centerCrop"
         tools:src="@drawable/ic_launcher_background" />
 
@@ -19,8 +19,8 @@
         android:layout_height="wrap_content"
         android:background="@drawable/bg_gray_gradient"
         android:gravity="center_horizontal"
-        android:padding="8dp"
-        android:textColor="#FFFFFF"
+        android:padding="@dimen/small_space"
+        android:textColor="@color/white"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/ivImage"
         app:layout_constraintEnd_toEndOf="parent"

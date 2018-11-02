@@ -25,7 +25,7 @@ public class MoviewViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void init(MoviesResults item) {
-        Picasso.get().load(Constants.APIConstants.IMAGES + item.getPoster_path()).into(ivImage);
+        Picasso.get().load(Constants.APIConstants.IMAGES_SMALL + item.getPoster_path()).into(ivImage);
         tvName.setText(item.getOriginal_title());
     }
 
